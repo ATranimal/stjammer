@@ -1,7 +1,18 @@
 import * as React from "react";
 
 import "./Track/track.scss";
+import { TrackInfo } from "./Track/TrackInfo";\
 
-export const Track: React.FC = () => {
-  return <div className="track">Audio Track</div>;
+export interface TrackProps {
+  trackNumber: number;
+}
+
+export const Track: React.FC<TrackProps> = props => {
+  const { trackNumber } = props;
+
+  return (
+    <div className="track">
+      <TrackInfo trackNumber={trackNumber} />
+    </div>
+  );
 };

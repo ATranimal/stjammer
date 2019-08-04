@@ -12,7 +12,8 @@ export const EditorBody: React.FC<EditorBodyProps> = props => {
 
   return (
     <div className="editor-body">
-      <Track />
+      <Track trackNumber={1} />
+      <Track trackNumber={2} />
     </div>
   );
 };

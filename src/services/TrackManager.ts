@@ -6,7 +6,8 @@ export class TrackManager {
   constructor() {
     this.tracks = [];
 
-    this.tracks.push(new Track(toneHelper.createTestOscillator()));
+    this.tracks.push(new Track(toneHelper.createOscillator()));
+    this.tracks.push(new Track(toneHelper.createOscillator()));
   }
 
   playTracks() {
@@ -19,6 +20,16 @@ export class TrackManager {
     this.tracks.forEach(track => {
       track.pause();
     });
+  }
+
+  changeTrackType(trackNumber, newType) {
+    try {
+      this.tracks[trackNumber] = new Track(
+        toneHelper.createOscillator(newType)
+      );
+    } catch {
+      console.log("error changing track types");
+    }
   }
 }
 

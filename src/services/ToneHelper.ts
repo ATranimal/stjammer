@@ -1,6 +1,6 @@
 import * as Tone from "tone";
 
-export function createTestOscillator() {
-  let osc = new Tone.Oscillator(440, "sine").toMaster();
+export function createOscillator(oscillatorType = "sine") {
+  let osc = new Tone.Oscillator(440, oscillatorType).toMaster();
   return osc;
 }
