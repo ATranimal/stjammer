@@ -1,4 +1,7 @@
+import * as Tone from "tone";
+
 import * as toneHelper from "./ToneHelper";
+import { SynthOptions } from "../models/SynthOptions";
 
 export class TrackManager {
   tracks: Track[];
@@ -6,8 +9,8 @@ export class TrackManager {
   constructor() {
     this.tracks = [];
 
-    this.tracks.push(new Track(toneHelper.createOscillator()));
-    this.tracks.push(new Track(toneHelper.createOscillator()));
+    this.tracks.push(new Track());
+    this.tracks.push(new Track());
   }
 
   playTracks() {
@@ -17,16 +20,12 @@ export class TrackManager {
   }
 
   pauseTracks() {
-    this.tracks.forEach(track => {
-      track.pause();
-    });
+    toneHelper.pauseTransport();
   }
 
-  changeTrackType(trackNumber, newType) {
+  changeTrackType(trackNumber: number, newType: OscillatorType) {
     try {
-      this.tracks[trackNumber] = new Track(
-        toneHelper.createOscillator(newType)
-      );
+      this.tracks[trackNumber].changeTrackSynth(newType);
     } catch {
       console.log("error changing track types");
     }
@@ -34,17 +33,31 @@ export class TrackManager {
 }
 
 export class Track {
-  soundSource: Tone.Source;
+  trackInstrument: Tone.PolySynth;
 
-  constructor(sound: Tone.Source) {
-    this.soundSource = sound;
+  constructor() {
+    this.trackInstrument = toneHelper.createPolySynth();
+
+    this.trackInstrument.toMaster();
   }
 
   play() {
-    this.soundSource.start();
+    this.trackInstrument.triggerAttackRelease(["C4", "E4", "A4"], "4n");
   }
 
-  pause() {
-    this.soundSource.stop();
+  changeTrackSynth(newType) {
+    const newOptions: SynthOptions = {
+      oscillator: {
+        type: newType,
+      },
+      envelope: {
+        attack: 0.005,
+        decay: 0.1,
+        sustain: 0.3,
+        release: 1,
+      },
+    };
+
+    this.trackInstrument.set(newOptions);
   }
 }
