@@ -9,3 +9,35 @@
   background-color: grey;
   border: 3px solid darkslategrey;
 }
+
+.track-pattern {
+  margin: 5px;
+  width: 320px;
+  height: 200px;
+
+  .pattern-row {
+    display: flex;
+
+    .pattern-node {
+      width: 38px;
+      height: 38px;
+      margin: 1px;
+
+      background-color: grey;
+
+      &:hover {
+        background-color: lightgreen;
+      }
+
+      &:active {
+        background-color: green;
+      }
+
+      .active {
+        width: 100%;
+        height: 100%;
+        background-color: green;
+      }
+    }
+  }
+}
