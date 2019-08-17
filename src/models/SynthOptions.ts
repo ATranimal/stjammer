@@ -1,18 +1,8 @@
-export type SynthOptions = {
-  oscillator: {
-    type: OscillatorType;
-  };
-  envelope: {
-    attack: number;
-    decay: number;
-    sustain: number;
-    release: number;
-  };
-};
+import { SynthOptions } from "tone";
 
-export const defaultSynthOptions: SynthOptions = {
+export const defaultSynthOption: SynthOptions = {
   oscillator: {
-    type: "triangle",
+    type: "sine",
   },
   envelope: {
     attack: 0.005,

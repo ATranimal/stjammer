@@ -1,7 +1,8 @@
-import * as Tone from "tone";
+import Tone from "tone";
+
+import { SynthOptions } from "tone";
 
 import * as toneHelper from "./ToneHelper";
-import { SynthOptions } from "../models/SynthOptions";
 
 export class TrackManager {
   tracks: Track[];
@@ -13,14 +14,28 @@ export class TrackManager {
     this.tracks.push(new Track());
   }
 
+  // TODO: Abstract out transport controls from the track manager
   playTracks() {
-    this.tracks.forEach(track => {
-      track.play();
-    });
+    // this.tracks.forEach(track => {
+    //   track.play();
+    // });
+    console.log("start");
+    Tone.Transport.schedule(time => {
+      this.tracks[0].trackInstrument.triggerAttackRelease(
+        "C4",
+        // [Tone.Frequency("C4"), Tone.Frequency("E4"), Tone.Frequency("A4")],
+        time
+      );
+    }, "8t");
+    Tone.Transport.start(0);
   }
 
   pauseTracks() {
     toneHelper.pauseTransport();
+  }
+
+  stopTracks() {
+    toneHelper.stopTransport();
   }
 
   changeTrackType(trackNumber: number, newType: OscillatorType) {
@@ -29,6 +44,17 @@ export class TrackManager {
     } catch {
       console.log("error changing track types");
     }
+  }
+
+  updateTrackPattern(trackNumber: number, activeNotes: string[]) {
+    console.log(activeNotes);
+    const seq = new Tone.Sequence(
+      (time, note) => {
+        console.log(note);
+      },
+      activeNotes,
+      "4n"
+    ).start(0);
   }
 }
 
@@ -42,7 +68,11 @@ export class Track {
   }
 
   play() {
-    this.trackInstrument.triggerAttackRelease(["C4", "E4", "A4"], "4n");
+    this.trackInstrument.triggerAttackRelease(
+      "C4",
+      // ["C4", "E4", "A4"]
+      "4n"
+    );
   }
 
   changeTrackSynth(newType) {

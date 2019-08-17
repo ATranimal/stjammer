@@ -2,12 +2,24 @@
   "name": "stjammer",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
+  "main": "src/start.js",
+  "build": {
+    "appId": "com.electron.electron-with-create-react-app",
+    "win": {
+      "iconUrl": "https://cdn2.iconfinder.com/data/icons/designer-skills/128/react-256.png"
+    },
+    "directories": {
+      "buildResources": "public"
+    }
+  },
   "dependencies": {
     "@types/jest": "24.0.16",
     "@types/node": "12.6.9",
     "@types/react": "16.8.24",
     "@types/react-dom": "16.8.5",
     "@types/react-select": "^3.0.0",
+    "electron": "^6.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
@@ -16,8 +28,14 @@
     "typescript": "3.5.3"
   },
   "scripts": {
-    "start": "parcel src/index.html",
-    "watch": "parcel watch src/index.html"
+    "watch": "parcel watch src/index.html",
+    "react-start": "set BROWSER=none && react-scripts start",
+    "electron": "electron .",
+    "electron-start": "node src/start-react",
+    "start": "nf start -p 3000",
+    "pack": "build --dir",
+    "dist": "npm run build && build",
+    "postinstall": "install-app-deps"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +57,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@types/tone": "git://github.com/Tonejs/TypeScript.git",
+    "electron-builder": "^21.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-plugin-import": "^2.18.2",

@@ -5,16 +5,17 @@ import { useState } from "react";
 export interface PatternNodeProps {
   xValue: number;
   yValue: number;
+  onNodeChange: Function;
 }
 
 export const PatternNode: React.FC<PatternNodeProps> = props => {
-  const { xValue, yValue } = props;
+  const { xValue, yValue, onNodeChange } = props;
 
   const [isActive, setIsActive] = useState("");
 
   const onNodeClick = () => {
     isActive === "" ? setIsActive("active") : setIsActive("");
-    console.log(isActive);
+    onNodeChange(xValue, yValue);
   };
 
   return (
