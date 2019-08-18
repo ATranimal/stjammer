@@ -16,11 +16,9 @@ export class TrackManager {
 
   // TODO: Abstract out transport controls from the track manager
   playTracks() {
-    // this.tracks.forEach(track => {
-    //   track.play();
-    // });
     console.log("start");
     Tone.Transport.schedule(time => {
+      console.log("playing!");
       this.tracks[0].trackInstrument.triggerAttackRelease(
         "C4",
         // [Tone.Frequency("C4"), Tone.Frequency("E4"), Tone.Frequency("A4")],
@@ -47,7 +45,6 @@ export class TrackManager {
   }
 
   updateTrackPattern(trackNumber: number, activeNotes: string[]) {
-    console.log(activeNotes);
     const seq = new Tone.Sequence(
       (time, note) => {
         console.log(note);

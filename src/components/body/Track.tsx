@@ -1,24 +1,32 @@
 import * as React from "react";
+import Tone from "tone";
 
-import { useContext } from "react";
+import { useEffect } from "react";
 
-import "./Track/track.scss";
 import { TrackInfo } from "./Track/TrackInfo";
 import { TrackPattern } from "./Track/TrackPattern";
-import { TrackManagerContext } from "../../App";
+
+import "./Track/track.scss";
 
 export interface TrackProps {
   trackNumber: number;
 }
 
 export const Track: React.FC<TrackProps> = props => {
-  const tm = useContext(TrackManagerContext);
   const { trackNumber } = props;
+  const synth = new Tone.Synth();
+
+  useEffect(() => {
+    synth.toMaster();
+    Tone.Transport.schedule(time => {
+      synth.triggerAttackRelease("C4", "8n");
+    }, "1:0:0");
+  }, []);
 
   return (
     <div className="track">
-      <TrackInfo trackNumber={trackNumber} />
-      <TrackPattern trackNumber={trackNumber} />
+      {/* <TrackInfo trackNumber={trackNumber} />
+      <TrackPattern trackNumber={trackNumber} /> */}
     </div>
   );
 };

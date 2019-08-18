@@ -4,7 +4,6 @@ import { useState, useContext } from "react";
 import Select from "react-select";
 
 import { SoundTypes } from "../../../models/SoundTypes";
-import { TrackManagerContext } from "../../../App";
 
 export interface TrackInfoProps {
   trackNumber: number;
@@ -13,13 +12,10 @@ export interface TrackInfoProps {
 export const TrackInfo: React.FC<TrackInfoProps> = props => {
   const { trackNumber } = props;
 
-  const tm = useContext(TrackManagerContext);
-
   const [soundType, setSoundType] = useState("sine");
 
   const handleSoundChange = selectedOption => {
     setSoundType(selectedOption.value);
-    tm.changeTrackType(trackNumber, selectedOption.value);
   };
 
   return (

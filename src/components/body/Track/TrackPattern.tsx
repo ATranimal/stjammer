@@ -2,14 +2,12 @@ import * as React from "react";
 
 import { useState, useContext, useEffect } from "react";
 import { PatternNode } from "./PatternNode";
-import { TrackManagerContext } from "../../../App";
 
 export interface TrackPatternProps {
   trackNumber: number;
 }
 
 export const TrackPattern: React.FC<TrackPatternProps> = props => {
-  const tm = useContext(TrackManagerContext);
   const { trackNumber } = props;
 
   const [patternHeight, setPatternHeight] = useState(5);
@@ -27,13 +25,11 @@ export const TrackPattern: React.FC<TrackPatternProps> = props => {
   ]);
 
   const onNodeChange = (xValue, yValue) => {
-    console.log(`${xValue} ${yValue}`);
     setActiveNotes(["C4", "C4", "C4", "C4", "C4", "C4", "C4", "C4"]);
   };
 
   useEffect(() => {
-    console.log("effect");
-    tm.updateTrackPattern(trackNumber, activeNotes);
+    // tm.updateTrackPattern(trackNumber, activeNotes);
   }, activeNotes);
 
   return (
@@ -47,7 +43,9 @@ export const TrackPattern: React.FC<TrackPatternProps> = props => {
                   key={xValue}
                   xValue={xValue}
                   yValue={yValue}
-                  onNodeChange={onNodeChange}
+                  onNodeChange={() => {
+                    onNodeChange(xValue, yValue);
+                  }}
                 />
               );
             })}

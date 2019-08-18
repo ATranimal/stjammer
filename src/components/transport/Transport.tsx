@@ -1,26 +1,30 @@
 import * as React from "react";
+import Tone from "tone";
 
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
+
 import "./Transport.scss";
-import { TrackManagerContext } from "../../App";
 
 export const Transport: React.FC = () => {
-  const tm = useContext(TrackManagerContext);
-
   const [isPlaying, setIsPlaying] = useState(false);
   const [playText, setPlayText] = useState("Play");
+
+  useEffect(() => {
+    Tone.Transport.position = "1:0:0";
+  }, []);
 
   const onPlayClick = () => {
     const playTracks = () => {
       setPlayText("Pause");
       setIsPlaying(true);
-      tm.playTracks();
+      Tone.Transport.start();
     };
 
     const pauseTracks = () => {
       setPlayText("Play");
       setIsPlaying(false);
-      tm.pauseTracks();
+      Tone.Transport.stop();
+      Tone.Transport.position = "1:0:0";
     };
 
     isPlaying ? pauseTracks() : playTracks();
@@ -33,6 +37,7 @@ export const Transport: React.FC = () => {
         <button className="btn play-button" onClick={() => onPlayClick()}>
           {playText}
         </button>
+        {Tone.Transport.position}
       </div>
     </footer>
   );
