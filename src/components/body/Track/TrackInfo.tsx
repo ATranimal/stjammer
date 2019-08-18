@@ -7,15 +7,17 @@ import { SoundTypes } from "../../../models/SoundTypes";
 
 export interface TrackInfoProps {
   trackNumber: number;
+  setSynthOscillatorType: Function;
 }
 
 export const TrackInfo: React.FC<TrackInfoProps> = props => {
-  const { trackNumber } = props;
+  const { trackNumber, setSynthOscillatorType } = props;
 
   const [soundType, setSoundType] = useState("sine");
 
   const handleSoundChange = selectedOption => {
     setSoundType(selectedOption.value);
+    setSynthOscillatorType(selectedOption.value);
   };
 
   return (

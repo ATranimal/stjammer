@@ -14,7 +14,7 @@ export interface TrackProps {
 
 export const Track: React.FC<TrackProps> = props => {
   const { trackNumber } = props;
-  const synth = new Tone.Synth();
+  const synth = new Tone.PolySynth();
 
   useEffect(() => {
     synth.toMaster();
@@ -23,10 +23,21 @@ export const Track: React.FC<TrackProps> = props => {
     }, "1:0:0");
   }, []);
 
+  const setSynthOscillatorType = newType => {
+    synth.set({
+      oscillator: {
+        type: newType,
+      },
+    });
+  };
+
   return (
     <div className="track">
-      {/* <TrackInfo trackNumber={trackNumber} />
-      <TrackPattern trackNumber={trackNumber} /> */}
+      <TrackInfo
+        trackNumber={trackNumber}
+        setSynthOscillatorType={setSynthOscillatorType}
+      />
+      {/* <TrackPattern trackNumber={trackNumber} /> */}
     </div>
   );
 };
